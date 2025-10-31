@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Mzanzibari{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <header><h1>Mzanzibari Food Stuffs</h1></header>
+    <nav>
+        <a href="/">Home</a> |
+        <a href="/app/dashboard/">Dashboard</a> |
+        <a href="/product/">Products</a>
+    </nav>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>
