@@ -10,15 +10,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # --------------------------------------
 # SECURITY
 # --------------------------------------
-SECRET_KEY = os.environ.get('SECRET_KEY', 'your-secret-key')
-DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
+SECRET_KEY = os.environ.get('SECRET_KEY', '6w3s*lcmb7=b0wwoip=og7k)6l*8vr4%-hx(44x0#95t@ldy75')
+DEBUG = os.environ.get('DEBUG', 'True').lower() == 'true'
 
 ALLOWED_HOSTS = ['.onrender.com', 'localhost', '127.0.0.1']
 
 # --------------------------------------
-# APPLICATION DEFINITION
+# APPLICATIONS
 # --------------------------------------
 INSTALLED_APPS = [
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -31,6 +32,9 @@ INSTALLED_APPS = [
     'apps.product',
 ]
 
+# --------------------------------------
+# MIDDLEWARE
+# --------------------------------------
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
 
@@ -45,8 +49,15 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+# --------------------------------------
+# URL & WSGI
+# --------------------------------------
 ROOT_URLCONF = 'Zanzibari.urls'
+WSGI_APPLICATION = 'Zanzibari.wsgi.application'
 
+# --------------------------------------
+# TEMPLATES
+# --------------------------------------
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -63,18 +74,28 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'Zanzibari.wsgi.application'
+# --------------------------------------
+# DATABASE CONFIGURATION
+# --------------------------------------
+DATABASE_URL = os.environ.get('DATABASE_URL')
 
-# --------------------------------------
-# DATABASE (Render provides DATABASE_URL)
-# --------------------------------------
-DATABASES = {
-    'default': dj_database_url.config(
-        default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
-        conn_max_age=600,
-        ssl_require=True
-    )
-}
+if DATABASE_URL:
+    # Use PostgreSQL (Render)
+    DATABASES = {
+        'default': dj_database_url.parse(
+            DATABASE_URL,
+            conn_max_age=600,
+            ssl_require=True
+        )
+    }
+else:
+    # Use SQLite locally
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 # --------------------------------------
 # PASSWORD VALIDATION
@@ -101,10 +122,25 @@ STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [BASE_DIR / 'Zanzibari' / 'static']
 
-# WhiteNoise configuration
+# WhiteNoise static file handling
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # --------------------------------------
 # DEFAULT PRIMARY KEY FIELD TYPE
 # --------------------------------------
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# --------------------------------------
+# LOGGING (Optional for debugging)
+# --------------------------------------
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {'class': 'logging.StreamHandler'},
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'WARNING',
+    },
+}

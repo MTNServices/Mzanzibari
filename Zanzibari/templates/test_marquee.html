@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome | Mzanzibari Food Stuffs</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #0a1f44, #1b4370);
+            color: white;
+            font-family: "Segoe UI", Arial, sans-serif;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        /* Smooth moving text */
+        .marquee {
+            position: absolute;
+            top: 20%;
+            white-space: nowrap;
+            font-size: 2rem;
+            font-weight: bold;
+            animation: moveText 8s linear infinite;
+        }
+
+        @keyframes moveText {
+            0% {
+                transform: translateX(-100%);
+            }
+            100% {
+                transform: translateX(100%);
+            }
+        }
+
+        .tagline {
+            font-size: 1.5rem;
+            margin-top: 4rem;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        footer {
+            position: absolute;
+            bottom: 10px;
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="marquee">Welcome to Mzanzibari Food Stuffs</div>
+    <div class="tagline">Work Smarter Like Never Before</div>
+
+    <footer>© 2025 Mzanzibari Food Stuffs. All rights reserved.</footer>
+
+</body>
+</html>
