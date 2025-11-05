@@ -1,1 +1,1 @@
-web: gunicorn Zanzibari.wsgi:application
+web: gunicorn MZANZIBARI.wsgi:application
