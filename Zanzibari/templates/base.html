@@ -1,20 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    {% load static %}
     <meta charset="UTF-8">
-    <title>{% block title %}Mzanzibari{% endblock %}</title>
-    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Mzanzibari Food Stuffs{% endblock %}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8fafc;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #1a237e;
+            color: white;
+            padding: 15px 25px;
+            text-align: center;
+        }
+
+        nav {
+            background-color: #3949ab;
+            padding: 10px;
+            text-align: center;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 30px auto;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0px 2px 6px rgba(0,0,0,0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        table, th, td {
+            border: 1px solid #0e0d0d;
+        }
+
+        th {
+            background-color: #f0f0f0;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        footer {
+            text-align: center;
+            padding: 15px;
+            background-color: #5e6ae6;
+            color: white;
+            margin-top: 30px;
+        }
+    </style>
 </head>
 <body>
-    <header><h1>Mzanzibari Food Stuffs</h1></header>
+    <header>
+        <h1>Mzanzibari Food Stuffs</h1>
+    </header>
+
     <nav>
-        <a href="/">Home</a> |
-        <a href="/app/dashboard/">Dashboard</a> |
+        <a href="/">Home</a>
+        <a href="/app/dashboard/">Dashboard</a>
         <a href="/product/">Products</a>
     </nav>
-    <main>
-        {% block content %}{% endblock %}
-    </main>
+
+    <div class="container">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <footer>
+        &copy; {{ now|date:"Y" }} Mzanzibari Food Stuffs. All rights reserved.
+    </footer>
 </body>
 </html>

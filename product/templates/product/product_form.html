@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Add Product</title>
+</head>
+<body>
+  <h2>Add Product</h2>
+  <form method="POST">
+    {% csrf_token %}
+    <label>Name:</label><br>
+    <input type="text" name="name" required><br>
+
+    <label>Category:</label><br>
+    <input type="text" name="category"><br>
+
+    <label>Price:</label><br>
+    <input type="number" name="price" step="0.01" required><br>
+
+    <label>Quantity:</label><br>
+    <input type="number" name="quantity" min="0" required><br><br>
+
+    <button type="submit">Save</button>
+  </form>
+  <p><a href="{% url 'product_list' %}">Back to Product List</a></p>
+</body>
+</html>

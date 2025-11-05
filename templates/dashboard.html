@@ -1,0 +1,140 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Zanzibari Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      background-color: #f5f6fa;
+      font-family: "Segoe UI", sans-serif;
+    }
+    .card {
+      border-radius: 15px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .summary-card {
+      text-align: center;
+      padding: 20px;
+    }
+    .chart-container {
+      width: 80%;
+      margin: 30px auto;
+    }
+  </style>
+</head>
+<body>
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>📊 Zanzibari Product Dashboard</h2>
+    <a href="{% url 'logout' %}" class="btn btn-danger">Logout</a>
+  </div>
+
+  <!-- Summary cards -->
+  <div class="row g-3">
+    <div class="col-md-4">
+      <div class="card summary-card bg-primary text-white">
+        <h4>Total Products</h4>
+        <h2>{{ total_products }}</h2>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card summary-card bg-success text-white">
+        <h4>Total Stock</h4>
+        <h2>{{ total_stock }}</h2>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card summary-card bg-warning text-white">
+        <h4>Low Stock Items (≤5)</h4>
+        <h2>{{ low_stock_products }}</h2>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chart -->
+  <div class="chart-container">
+    <canvas id="stockChart"></canvas>
+  </div>
+
+  <!-- Table Summary -->
+  <div class="card mt-4 p-3">
+    <h4>📦 Product Summary</h4>
+    <div class="table-responsive">
+      {{ df|safe }}
+    </div>
+  </div>
+<div class="text-end mb-3">
+  <a href="{% url 'add_product' %}" class="btn btn-outline-primary">+ Add Product</a>
+</div>
+
+{% for product in products %}
+  <div>
+    <strong>{{ product.name }}</strong> ({{ product.category.name }}) -
+    {{ product.price }} Ksh - {{ product.quantity }} pcs
+    <a href="{% url 'edit_product' product.id %}" class="btn btn-sm btn-warning">Edit</a>
+  </div>
+{% empty %}
+  <p>No product data available.</p>
+{% endfor %}
+
+  <!-- Export Buttons -->
+  <div class="mt-4 text-center">
+    <a href="{% url 'export_csv' %}" class="btn btn-outline-primary me-2">Download CSV</a>
+    <a href="{% url 'export_excel' %}" class="btn btn-outline-success me-2">Download Excel</a>
+    <a href="{% url 'export_pdf' %}" class="btn btn-outline-danger">Download PDF</a>
+  </div>
+
+  <!-- Summary Section -->
+  <div class="card mt-5 p-4">
+    <h5>📝 Summary Analysis</h5>
+    <p>
+      {% if category_summary %}
+        {% with top_category=category_summary.0.category %}
+        The category with the most products is <b>{{ top_category }}</b> 
+        with {{ category_summary.0.count }} total items in stock.
+        {% endwith %}
+      {% else %}
+        No category data available.
+      {% endif %}
+    </p>
+    <p>
+      {% if low_stock_products > 0 %}
+        <span class="text-danger">⚠ {{ low_stock_products }} items are running low on stock.</span>
+      {% else %}
+        <span class="text-success">✅ All items are sufficiently stocked.</span>
+      {% endif %}
+    </p>
+  </div>
+</div>
+
+<!-- Chart Script -->
+<script>
+const ctx = document.getElementById('stockChart');
+const data = {
+  labels: [{% for cat in category_summary %}'{{ cat.category }}',{% endfor %}],
+  datasets: [{
+    label: 'Stock per Category',
+    data: [{% for cat in category_summary %}{{ cat.total_stock }},{% endfor %}],
+    backgroundColor: 'rgba(54, 162, 235, 0.7)',
+    borderColor: 'rgba(54, 162, 235, 1)',
+    borderWidth: 1,
+    borderRadius: 5
+  }]
+};
+new Chart(ctx, {
+  type: 'bar',
+  data: data,
+  options: {
+    scales: { y: { beginAtZero: true } },
+    plugins: {
+      legend: { display: false },
+      title: { display: true, text: 'Stock by Category' }
+    }
+  }
+});
+</script>
+</body>
+</html>

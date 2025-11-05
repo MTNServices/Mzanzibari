@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %}Edit Product{% endblock %}
+
+{% block content %}
+<h2>Edit Product: {{ product.name }}</h2>
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" style="background-color:#1a237e;color:white;padding:8px 15px;border:none;border-radius:5px;">Update</button>
+</form>
+
+<a href="{% url 'dashboard' %}">Back to Dashboard</a>
+{% endblock %}
