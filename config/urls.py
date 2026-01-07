@@ -31,6 +31,10 @@ def api_root(request):
             ('API Schema', '/api/schema/'),
         ]
     }
+    try:
+        print(f"[api_root] request.path={request.path}")
+    except Exception:
+        pass
     return render(request, 'landing.html', context)
 
 urlpatterns = [
