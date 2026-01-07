@@ -19,11 +19,28 @@ INSTALLED_APPS = [
 # project apps and third-party
 INSTALLED_APPS += [
 	'rest_framework',
-	'apps.products',
+    'django_filters',
+    'apps.products',
+    'apps.inventory',
+    'apps.sales',
+    'apps.purchases',
 ]
 
+# DRF Configuration
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': [
+        'django_filters.rest_framework.DjangoFilterBackend',
+        'rest_framework.filters.SearchFilter',
+        'rest_framework.filters.OrderingFilter',
+    ],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 20,
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+    ],
+}
+
 MIDDLEWARE = [
-	'django.middleware.security.SecurityMiddleware',
 	'django.contrib.sessions.middleware.SessionMiddleware',
 	'django.middleware.common.CommonMiddleware',
 	'django.middleware.csrf.CsrfViewMiddleware',
