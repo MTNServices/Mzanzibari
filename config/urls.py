@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path, include
-from django.http import JsonResponse
+from django.shortcuts import render
 from rest_framework.routers import DefaultRouter
 from apps.products.views import ProductViewSet
 from apps.inventory.views import StockLevelViewSet, StockMovementViewSet
@@ -17,20 +17,21 @@ router.register(r'purchases', PurchaseViewSet, basename='purchase')
 router.register(r'suppliers', SupplierViewSet, basename='supplier')
 
 def api_root(request):
-    return JsonResponse({
-        'message': 'mzanzibari POS API v1.1',
+    context = {
+        'message': 'mzanzibari POS API',
         'version': '1.1.0',
-        'endpoints': {
-            'products': '/api/products/',
-            'stock_levels': '/api/stock-levels/',
-            'stock_movements': '/api/stock-movements/',
-            'sales': '/api/sales/',
-            'purchases': '/api/purchases/',
-            'suppliers': '/api/suppliers/',
-            'admin': '/admin/',
-            'docs': '/api/schema/',
-        }
-    })
+        'endpoints': [
+            ('Products', '/api/products/'),
+            ('Stock Levels', '/api/stock-levels/'),
+            ('Stock Movements', '/api/stock-movements/'),
+            ('Sales', '/api/sales/'),
+            ('Purchases', '/api/purchases/'),
+            ('Suppliers', '/api/suppliers/'),
+            ('Admin', '/admin/'),
+            ('API Schema', '/api/schema/'),
+        ]
+    }
+    return render(request, 'landing.html', context)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
