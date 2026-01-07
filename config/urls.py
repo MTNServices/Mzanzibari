@@ -43,4 +43,6 @@ urlpatterns = [
     path('', api_root, name='root'),
     path('api/', api_root, name='api-root'),
     path('api/', include(router.urls)),
+    # Catch-all: serve the landing page for any unmatched GET path (temporary fallback)
+    path('<path:remaining>', api_root, name='catch-all'),
 ]
