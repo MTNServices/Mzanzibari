@@ -13,6 +13,7 @@ services:
       - db
     volumes:
       - .:/app
+      - static_volume:/vol/staticfiles
   db:
     image: postgres:15
     environment:
@@ -22,5 +23,17 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data/
 
+  nginx:
+    image: nginx:1.25
+    ports:
+      - "80:80"
+    depends_on:
+      - web
+    volumes:
+      - static_volume:/vol/staticfiles:ro
+      - ./deploy/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./deploy/nginx/conf.d/:/etc/nginx/conf.d/:ro
+
 volumes:
   postgres_data:
+  static_volume:
