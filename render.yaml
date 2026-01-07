@@ -18,7 +18,7 @@ services:
       - key: DEBUG
         value: "False"
       - key: ALLOWED_HOSTS
-        value: "*.render.com"
+        value: "mzanzibari.onrender.com,*.render.com"
       - key: DATABASE_URL
         fromDatabase:
           name: mzanzibari-db
