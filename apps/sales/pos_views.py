@@ -1,0 +1,1 @@
+# POS specific views placeholder
