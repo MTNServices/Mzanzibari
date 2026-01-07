@@ -12,7 +12,7 @@ services:
       - key: DJANGO_SETTINGS_MODULE
         value: config.settings_production
       - key: SECRET_KEY
-        value: "change-me-to-a-secure-random-key-in-render-dashboard"
+        value: "$p70kf5#ub*(7rekunj&b79ch*z8#-=$zt$(0&s)eo5a3pz*4="
       - key: DEBUG
         value: "False"
       - key: ALLOWED_HOSTS
