@@ -1,3 +1,6 @@
-Django>=4.0
+Django>=4.2
 djangorestframework
+django-filter
+gunicorn
+psycopg2-binary
 python-dotenv
