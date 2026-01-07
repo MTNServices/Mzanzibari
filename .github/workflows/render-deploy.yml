@@ -41,7 +41,7 @@ jobs:
           DJANGO_SETTINGS_MODULE: config.settings_production
           DEBUG: "False"
           SECRET_KEY: test-secret-key-ci
-          DATABASE_URL: postgres://mzuser:mzpass@localhost:5432/mzdb
+          DATABASE_URL: postgresql://mzuser:mzpass@localhost:5432/mzdb
           ALLOWED_HOSTS: "localhost,127.0.0.1"
         run: python manage.py migrate
 
@@ -50,7 +50,7 @@ jobs:
           DJANGO_SETTINGS_MODULE: config.settings_production
           DEBUG: "False"
           SECRET_KEY: test-secret-key-ci
-          DATABASE_URL: postgres://mzuser:mzpass@localhost:5432/mzdb
+          DATABASE_URL: postgresql://mzuser:mzpass@localhost:5432/mzdb
           ALLOWED_HOSTS: "localhost,127.0.0.1"
         run: python manage.py test -v2
 
