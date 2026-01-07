@@ -11,8 +11,7 @@ services:
         value: 3.11.7
       - key: DJANGO_SETTINGS_MODULE
         value: config.settings_production
-      - key: SECRET_KEY
-        value: "$p70kf5#ub*(7rekunj&b79ch*z8#-=$zt$(0&s)eo5a3pz*4="
+      # SECRET_KEY should be set in the Render dashboard (Environment) and not committed to the repo
       - key: DEBUG
         value: "False"
       - key: ALLOWED_HOSTS
