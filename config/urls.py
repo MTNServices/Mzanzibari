@@ -16,7 +16,7 @@ router.register(r'sales', SaleViewSet, basename='sale')
 router.register(r'purchases', PurchaseViewSet, basename='purchase')
 router.register(r'suppliers', SupplierViewSet, basename='supplier')
 
-def api_root(request):
+def api_root(request, **kwargs):
     context = {
         'message': 'mzanzibari POS API',
         'version': '1.1.0',
