@@ -5,7 +5,7 @@ import dj_database_url
 # Override settings from environment
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 SECRET_KEY = os.environ.get('SECRET_KEY', SECRET_KEY)
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost').split(',')
+ALLOWED_HOSTS = [h.strip() for h in os.environ.get('ALLOWED_HOSTS', 'localhost').split(',')]
 
 # Database - use DATABASE_URL (Render) if provided, otherwise individual env vars
 if 'DATABASE_URL' in os.environ:
