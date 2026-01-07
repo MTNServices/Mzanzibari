@@ -7,6 +7,13 @@ DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 SECRET_KEY = os.environ.get('SECRET_KEY', SECRET_KEY)
 ALLOWED_HOSTS = [h.strip() for h in os.environ.get('ALLOWED_HOSTS', 'localhost').split(',')]
 
+# Debug: print key env values so Render logs show what the app sees on startup
+try:
+    print("[settings_production] DJANGO_SETTINGS_MODULE=", os.environ.get('DJANGO_SETTINGS_MODULE'))
+    print("[settings_production] ALLOWED_HOSTS=", ALLOWED_HOSTS)
+except Exception:
+    pass
+
 # Database - use DATABASE_URL (Render) if provided, otherwise individual env vars
 if 'DATABASE_URL' in os.environ:
     DATABASES = {
