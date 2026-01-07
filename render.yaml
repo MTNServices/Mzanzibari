@@ -1,0 +1,31 @@
+services:
+  - type: web
+    name: mzanzibari-web
+    env: python
+    plan: free
+    buildCommand: pip install -r requirements.txt && python manage.py migrate && python manage.py collectstatic --noinput
+    startCommand: gunicorn config.wsgi:application --bind 0.0.0.0:$PORT
+    autoDeploy: true
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.7
+      - key: DJANGO_SETTINGS_MODULE
+        value: config.settings_production
+      - key: SECRET_KEY
+        fromDatabase:
+          name: mzanzibari-db
+          property: secret_key
+      - key: DEBUG
+        value: "False"
+      - key: ALLOWED_HOSTS
+        value: "*.render.com"
+      - key: DATABASE_URL
+        fromDatabase:
+          name: mzanzibari-db
+          property: connectionString
+
+  - type: pserv
+    name: mzanzibari-db
+    plan: free
+    ipAllowList: []
+    postgreSQLVersion: "15"
