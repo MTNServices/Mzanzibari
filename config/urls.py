@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.urls import path, include
 from django.shortcuts import render
+from django.http import JsonResponse
 from rest_framework.routers import DefaultRouter
 from apps.products.views import ProductViewSet
 from apps.inventory.views import StockLevelViewSet, StockMovementViewSet
@@ -15,6 +16,10 @@ router.register(r'stock-movements', StockMovementViewSet, basename='stock-moveme
 router.register(r'sales', SaleViewSet, basename='sale')
 router.register(r'purchases', PurchaseViewSet, basename='purchase')
 router.register(r'suppliers', SupplierViewSet, basename='supplier')
+
+def health_check(request):
+    """Simple health check endpoint that doesn't require database."""
+    return JsonResponse({'status': 'ok', 'service': 'mzanzibari-pos'})
 
 def api_root(request, **kwargs):
     context = {
@@ -39,6 +44,7 @@ def api_root(request, **kwargs):
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('health/', health_check, name='health-check'),
     # root -> api root for convenience
     path('', api_root, name='root'),
     path('api/', api_root, name='api-root'),
